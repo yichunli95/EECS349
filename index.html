@@ -21,15 +21,16 @@
     <nav class="navbar navbar-default navbar-fixed-top" id="my-navbar">
       <div class="container">
         <div class="navbar-header">
-          <a href="" class="navbar-brand">Genre Classifier</a>
+          <a href="" class="navbar-brand">PISA Score Prediction</a>
         </div><!-- Navbar Header-->
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#Overview">Overview</a></li>
-            <li><a href="#Methodology">Methodology</a></li>
+            <li><a href="#Setup">Setup</a></li>
+            <li><a href="#ip">Initial Approach</a></li>
+            <li><a href="#np">New Approach</a></li>
             <li><a href="#Results">Results</a></li>
-            <li><a href="#Conclusion">Conclusion</a></li>
-
+ 			<li><a href="#ct">Consequent Testing</a></li>
+ 			<li><a href="#conc">Conclusion</a></li>
           </ul>
         </div><!-- End navbar body-->
       </div><!-- End container-->
@@ -38,7 +39,7 @@
     <div class="container">
       <div class="jumbotron">
         <div class="container text-center">
-          <h2>Genre Classifier</h2>
+          <h2>PISA Score Prediction</h2>
           <h4><a href="http://www.cs.northwestern.edu/~ddowney/courses/349_Spring2017/" target="_blank">Northwestern University EECS 349</a> with Professor Doug Downey </a> </h4>
          </div>
         <div class="row text-center">
@@ -58,19 +59,19 @@
 <div class="container" id="Synopsis">
       <h4 class="text-left">Synopsis</h4>
         <div>
-          Our task is to predict the PISA test scores for 15-year-old students based on their family and school information. Our inputs include basic personal information, family educational/career background, educational/school resources, and learning experiences for each student taking the PISA exam. Our output is simply a predictive score for the critical reading section of the test for each candidate.
+          PISA stands for Programme for International Student Assessment. It is a test conducted by OECD (Organisation for Economic Cooperation ande Development) in member and non-member nations of 15-year-old students annually on subjects of science, mathematics and reading. Our task is to predict the PISA test scores for 15-year-old students based on their family and school information. Our inputs include basic personal information, family educational/career background, educational/school resources, and learning experiences for each student taking the PISA exam. Our output is simply a predictive score for the critical reading section of the test for each candidate.
           <br>
           Our task is interesting because we want figure out a quantitative relationship indicating to what extent a student’s family background and school/educational resources can affect his/her academic/IQ performance. Our task is an important one because it provides us with an insight of how students perform in school. Thus, in the future, we can better identify and help the students in need.
           <br>
           In total, We tried using the following classifiers for our dataset: Decision Tree (J48), K-nearest Neighbors (IBK), Logistic Regression, Linear Regression, Multilayer Perceptron and Naive Bayes.
           <br>
-          There are 23 features in total covering basic information, family background, education background and resources, and classroom experience.
+          There are 23 features in total covering basic information, family background, education background and resources, and classroom experience. Through the data processing and modification of our methods, we are able to achieve prediction accuracy of around 50%. We believe that other factors not included in the official PISA set might be more indicative of the reading score than the current ones.
 
   </div>
 </div><!-- End container-->
 <div class="container" id="Final Report">
       <h4 class="text-left">Final Report</h4>
-      <h5 class="text-left">Setup</h5>
+      <h5 class="text-left" id="Setup">Setup</h5>
       The dataset used is in 2009 from United national Cetner for Education Statistics (NCES). There are in total 5233 samples. 
       We used the following 23 features to construct the model for the dataset:
       <ul>
@@ -100,14 +101,14 @@
       </ul>
 
 
-      <h5 class="text-left">Initial Approach</h5>
+      <h5 class="text-left" id="ip">Initial Approach</h5>
       	Originally, we used 4733 for training and 500 for testing.
       	We decided to build a linear regression model to evaluate reading test scores based on the 23 features. 
       	<br>
       	We wrote our own code to perform the lienar regression and also an error function test out the error of the model.
       	We reached a result where the final score has, on average, about 15% away from the actual score. This does not necessarily give us reliable results and insight into how students with different background and differences could be different.
       	<br>
-      <h5 class="text-left">New Approach</h5>     	
+      <h5 class="text-left" id="np">New Approach</h5>     	
       	We then decided to train and test our model based on Weka and transform the problem into a classification of letter grade of A, B, or C based on the range or scores so that we will be able to get results using different classifiers:
       	<br>
       	The student will be graded C if the score is less than 450;
@@ -116,7 +117,8 @@
       	<br>
       	The student will be graded A if the score is greater than or equal to 500.
       	<br>
-      	<h6 class="text-left">Weka Results</h6>
+      	Before we run out dataset on Weka, we also normalized all the attribute values to be between 0 and 1. Additionally, any nominal or categorical attributes are converted into binary 
+      	<h6 class="text-left" id="Results">Results</h6>
       	We ran our model through Weka and we used ZeroR as our benchmark to evaluate other classifiers. Any missing value of a sample is filled with the mean value of that attribute:
       	<br>
       	<br>
@@ -161,15 +163,10 @@
 		      </tr>		      	      
 		    </tbody>
 		</table>
-      	<br>
-      	
-      	<br>
-      	<h6 class="text-left">Data Processing</h6>
+
+      	<h6 class="text-left" id="ct">Consequent Testing</h6>
       	In addition, we also did additional data processing.
       	<ul>
-      	 <li>We normalized all the data to be between 0 and 1 of all the features.
-      	 <br>
-      	 The processing did not affect our final accuracy for the classifiers and we conclude that the similar normialization would have been performed by Weka automatically before it performs classification on any model.</li>
       	 <li>We tried to do feature selection, where we deleted some features, in our case whether father and mother went to high school. 
       	 <br>
       	 Similarly, we did not achieve any apparent results.
@@ -213,13 +210,20 @@
 		      </tr>		      	      
 		    </tbody>
 		</table>
-      	 <br>
       	 We then tried to replace the 'NA' values with mean of each attribute and that did not achieve any apparent improvement in the model either.
       	</ul>
-      <h5 class="text-left">Conclusion</h5>
-      	We conclude that there is correlation between the background attributes and the final reading score for a student in a PISA test. However, we think that there are potentially other factors that play a bigger role into determining the performance of a student in PISA test.
+      <h5 class="text-left" id="conc">Conclusion</h5>
+      	In conclusion, we do find that there is a weak relationship between all the attributes provided in the dataset and the final reading score despit the fact that qualitatively, we would assume a strong correlation. Performing feature selection could also be potentially a good approach into reducing the effect of overfitting and irrelevant variables.
+      	<br>
+      	Additionally, we do think that using potentially other attributes could be beneficial to finding the correlation between the student's background and their reading score performances. Attributes such as nationality, the students' score in science and mathematics, as well as the difficulty of the curriculum could potentially play a more direct role in predicting the student's reading test score. 
+      	<br>
+		<ul class="nav navbar-nav">
+		<li><a href="RawData/" download target="_blank"> <center> <figure>  <img src="rawdata.png" style="width:35px" </img> <figcaption>Raw Feature Data (.CSV) </figcaption> </figure> </center></a></li>
+		     <li><a href="https://yichunli95.github.io/EECS349/"  target="_blank"> <center> <figure>  <img src="github.png" style="width:35px" </img> <figcaption>Project GitHub </figcaption> </figure> </center></a></li>                
+		</ul>
+ </div>
 
-</div>
+
  
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
